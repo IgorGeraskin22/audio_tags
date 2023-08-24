@@ -7,13 +7,13 @@
     <h1>Заметки в HTML</h1>
 
     <div class="note-container">
-        <p>Это первая строка текста111 <span class="note"></span></p>
+        <p>Это первая строка текста123 <!-- Заметка: --></p>
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
     </div>
 
     <div class="note-container">
-        <p>Это вторая строка текста <span class="note"></span></p>
+        <p>Это вторая строка текста <!-- Заметка: --></p>
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
     </div>
@@ -32,8 +32,17 @@
             const noteText = noteTextarea.value;
 
             if (noteText) {
-                const noteSpan = button.parentElement.querySelector('.note');
-                noteSpan.textContent = ` [Заметка: ${noteText}]`;
+                const noteComment = `<!-- Заметка: ${noteText} -->`;
+
+                const noteContainer = button.parentElement;
+                const paragraph = noteContainer.querySelector('p');
+                const existingNoteComment = paragraph.innerHTML.match(/<!-- Заметка: .*? -->/);
+
+                if (existingNoteComment) {
+                    paragraph.innerHTML = paragraph.innerHTML.replace(existingNoteComment[0], noteComment);
+                } else {
+                    paragraph.innerHTML += ' ' + noteComment;
+                }
 
                 noteTextarea.value = ''; // Очищаем поле ввода заметки
                 alert('Заметка сохранена!');
