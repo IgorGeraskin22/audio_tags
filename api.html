@@ -20,23 +20,20 @@
     </style>
 </head>
 <body>
-    <p>Это строка текста 1111</p>
     <div class="note-container">
-        <input type="hidden" class="note-hidden" value="">
+        <p>Это строка текста 123</p>
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
     </div>
 
-    <p>Это строка текста 2</p>
     <div class="note-container">
-        <input type="hidden" class="note-hidden" value="">
+        <p>Это строка текста 2</p>
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
     </div>
 
-    <p>Это строка текста 3</p>
     <div class="note-container">
-        <input type="hidden" class="note-hidden" value="">
+        <p>Это строка текста 3</p>
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
     </div>
@@ -49,19 +46,13 @@
         noteButtons.forEach(button => {
             const noteContainer = button.parentNode;
             const noteTextarea = noteContainer.querySelector('.note-input');
-            const noteHidden = noteContainer.querySelector('.note-hidden');
 
             button.addEventListener('click', () => {
                 const noteText = noteTextarea.value;
-                noteHidden.value = noteText;
+                const noteComment = `<!-- ${noteText} -->`;
+                const textElement = noteContainer.querySelector('p');
+                textElement.insertAdjacentHTML('beforeend', noteComment);
             });
-
-            noteTextarea.addEventListener('input', () => {
-                noteHidden.value = noteTextarea.value;
-            });
-
-            // Восстановление заметок после перезагрузки страницы
-            noteTextarea.value = noteHidden.value;
         });
     </script>
 </body>
