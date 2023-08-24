@@ -17,41 +17,50 @@
         .note-button {
             margin-left: 10px;
         }
+
+        .note {
+            margin-left: 10px;
+            font-style: italic;
+            color: gray;
+        }
     </style>
 </head>
 <body>
     <div class="note-container">
-        <p>Это строка текста 123</p>
+        <p>Это строка текста 144</p>
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
+        <span class="note"></span>
     </div>
 
     <div class="note-container">
         <p>Это строка текста 2</p>
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
+        <span class="note"></span>
     </div>
 
     <div class="note-container">
         <p>Это строка текста 3</p>
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
+        <span class="note"></span>
     </div>
 
     <!-- Повторите блок note-container для каждой строки текста -->
 
     <script>
         const noteButtons = document.querySelectorAll('.note-button');
+        const noteContainers = document.querySelectorAll('.note-container');
 
-        noteButtons.forEach(button => {
-            const noteContainer = button.parentNode;
+        noteButtons.forEach((button, index) => {
+            const noteContainer = noteContainers[index];
             const noteTextarea = noteContainer.querySelector('.note-input');
+            const noteElement = noteContainer.querySelector('.note');
 
             button.addEventListener('click', () => {
                 const noteText = noteTextarea.value;
-                const noteComment = `<!-- ${noteText} -->`;
-                const textElement = noteContainer.querySelector('p');
-                textElement.insertAdjacentHTML('beforeend', noteComment);
+                noteElement.textContent = noteText;
             });
         });
     </script>
