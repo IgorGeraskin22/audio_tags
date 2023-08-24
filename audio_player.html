@@ -18,28 +18,29 @@
             box-sizing: border-box;
             position: fixed;
             top: 0;
-            left: 0;
+            right: 0;
             height: 100%;
             overflow-y: auto;
         }
 
         #audioContent {
-            padding-left: 320px; /* Отступ справа от сайдбара */
+            padding-right: 320px; /* Отступ слева от сайдбара */
         }
 
         .audio-line {
             position: relative;
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
         }
 
         .note-input {
             width: 100%;
             height: 25px;
-            margin-top: 5px;
         }
 
         .note-button {
-            margin-top: 5px;
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -53,11 +54,24 @@
     </div>
 
     <div id="audioContent">
+        <div id="audioContainer">
+            <audio id="audioPlayer" controls>
+                <source src="https://github.com/IgorGeraskin22/audio_tags/raw/main/32.mp3">
+                Ваш браузер не поддерживает аудиоэлемент.
+            </audio>
+        </div>
+
         <h1>23.8 Юля\Сериков\оплата</h1>
-        <p class="audio-line">СЕРИКОВ <a href="javascript:void(0);" onclick="jumpToTime(0)">0:00:00</a>  Юлия, здравствуйте</p>
-        <p class="audio-line">ЮЛЯ  <a href="javascript:void(0);" onclick="jumpToTime(10)">0:00:10</a>  Здравствуйте.  … печатная машинка с деньгами работает.</p>
-        <p class="audio-line">СЕРИКОВ <a href="javascript:void(0);" onclick="jumpToTime(18)">0:00:18</a>  К сожалению, не с деньгами.</p>
-        <p class="audio-line">ЮЛЯ  <a href="javascript:void(0);" onclick="jumpToTime(26)">0:00:26</a>  Так, что, коллеги, вы хотели пообщаться.  Окей, давайте. С чего начнем наше обсуждение? С клиентов, с ваших вопросов.  Коллеги?  Павел, у вас выключен микрофон.</p>
+        <div class="audio-line">
+            <p>СЕРИКОВ <a href="javascript:void(0);" onclick="jumpToTime(0)">0:00:00</a>  Юлия, здравствуйте</p>
+            <div class="note-container">
+                <textarea class="note-input" placeholder="Введите заметку..."></textarea>
+                <button class="note-button">Сохранить</button>
+            </div>
+        </div>
+        <!-- Повторите этот блок для каждой строки -->
+
+        <!-- ... другие аудио-строки ... -->
     </div>
 
     <script>
