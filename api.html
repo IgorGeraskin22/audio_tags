@@ -46,10 +46,14 @@
 
             noteSaveButtons[i].addEventListener('click', () => {
                 const note = noteInputs[i].value;
-                const noteComment = `<!-- Заметка: ${note} -->`;
-
-                const textElement = noteContainers[i].previousSibling;
-                textElement.insertAdjacentHTML('afterend', noteComment);
+                const textElement = noteContainers[i].previousElementSibling;
+                
+                if (!textElement.hasAttribute('data-note')) {
+                    textElement.setAttribute('data-note', note);
+                } else {
+                    textElement.setAttribute('data-note', `${textElement.getAttribute('data-note')} ${note}`);
+                }
+                
                 noteContainers[i].style.display = 'none';
                 noteInputs[i].value = '';
             });
