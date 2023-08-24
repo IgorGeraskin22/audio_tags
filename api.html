@@ -1,0 +1,34 @@
+const token = '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'; // Замените на ваш токен доступа
+const noteText = 'Ваша_заметка'; // Замените на текст вашей заметки
+
+const gistData = {
+    description: 'Заметка с использованием GitHub API',
+    public: true, // Сделать Gist публичным
+    files: {
+        'note.txt': {
+            content: noteText
+        }
+    }
+};
+
+fetch('https://api.github.com/gists', {
+    method: 'POST',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(gistData)
+})
+.then(response => {
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Произошла ошибка при создании Gist');
+    }
+})
+.then(data => {
+    console.log('Gist успешно создан:', data);
+})
+.catch(error => {
+    console.error('Ошибка:', error);
+});
