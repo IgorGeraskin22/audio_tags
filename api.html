@@ -1,79 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Заметки на странице</title>
+    <title>Заметки с Google Drive API</title>
+    <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
-    <h1>Заметки на странице</h1>
+    <h1>Заметки с Google Drive API</h1>
 
-    <div id="notesContainer">
-        <div class="note">
-            <p>Это первая строка текста1.</p>
-            <textarea class="note-input" placeholder="Введите заметку"></textarea>
-            <button class="note-button">Сохранить</button>
-            <div class="note-text"></div>
-        </div>
+    <p>Строка 1 <span id="note1"></span></p>
+    <p>Строка 2 <span id="note2"></span></p>
+    <p>Строка 3 <span id="note3"></span></p>
 
-        <div class="note">
-            <p>Это вторая строка текста.</p>
-            <textarea class="note-input" placeholder="Введите заметку"></textarea>
-            <button class="note-button">Сохранить</button>
-            <div class="note-text"></div>
-        </div>
-
-        <!-- Повторите блок .note для каждой строки текста -->
-    </div>
+    <textarea id="noteInput" placeholder="Введите заметку"></textarea>
+    <button id="saveButton">Сохранить</button>
 
     <script>
-        const CLIENT_ID = '579011393870-5tucmv1mnghemvgm8d0oq2j6gid7pmqf.apps.googleusercontent.com';
-        const API_KEY = 'AIzaSyCTz5JY4g1eosz5DN5Qa4Mg6gKA10v0XK8';
-        const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-        const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+        gapi.load('client', init);
 
-        const notes = document.querySelectorAll('.note');
-        gapi.load('client:auth2', initClient);
-
-        function initClient() {
+        function init() {
             gapi.client.init({
-                apiKey: API_KEY,
-                clientId: CLIENT_ID,
-                discoveryDocs: DISCOVERY_DOCS,
-                scope: SCOPES
-            }).then(() => {
-                notes.forEach(note => {
-                    const textarea = note.querySelector('.note-input');
-                    const button = note.querySelector('.note-button');
-                    const noteText = note.querySelector('.note-text');
-
-                    button.addEventListener('click', () => {
-                        const newNote = document.createElement('p');
-                        newNote.textContent = `Заметка: ${textarea.value}`;
-                        noteText.appendChild(newNote);
-                        textarea.value = '';
-
-                        saveNoteToDrive(newNote.textContent);
-                    });
-                });
+                apiKey: 'AIzaSyCTz5JY4g1eosz5DN5Qa4Mg6gKA10v0XK8', // Замените на свой ключ API
+                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+            }).then(function() {
+                console.log('Google API initialized');
+                document.getElementById('saveButton').addEventListener('click', saveNote);
+            }).catch(function(error) {
+                console.error('Error initializing Google API', error);
             });
         }
 
-        function saveNoteToDrive(note) {
-            gapi.client.drive.files.create({
-                resource: {
-                    name: 'note.txt',
-                    mimeType: 'text/plain'
-                },
-                media: {
-                    mimeType: 'text/plain',
-                    body: note
-                }
-            }).then(response => {
-                console.log('Заметка сохранена на Google Drive:', response);
-            }).catch(error => {
-                console.error('Произошла ошибка при сохранении заметки:', error);
-            });
+        function saveNote() {
+            const noteInput = document.getElementById('noteInput').value;
+            if (noteInput) {
+                const notes = document.querySelectorAll('span[id^="note"]');
+                notes.forEach((note, index) => {
+                    if (note.textContent === '') {
+                        note.textContent = noteInput;
+                        const comment = `<!-- Заметка: ${noteInput} -->`;
+                        const paragraph = note.parentElement;
+                        const currentContent = paragraph.innerHTML;
+                        paragraph.innerHTML = `${comment} ${currentContent}`;
+                        return;
+                    }
+                });
+            }
         }
     </script>
-    <script src="https://apis.google.com/js/api.js"></script>
 </body>
 </html>
