@@ -22,18 +22,21 @@
 <body>
     <p>Это строка текста 1</p>
     <div class="note-container">
+        <input type="hidden" class="note-hidden" value="">
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
     </div>
 
     <p>Это строка текста 2</p>
     <div class="note-container">
+        <input type="hidden" class="note-hidden" value="">
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
     </div>
 
     <p>Это строка текста 3</p>
     <div class="note-container">
+        <input type="hidden" class="note-hidden" value="">
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
     </div>
@@ -44,14 +47,21 @@
         const noteButtons = document.querySelectorAll('.note-button');
 
         noteButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const noteContainer = button.parentNode;
-                const noteTextarea = noteContainer.querySelector('.note-input');
-                const noteText = noteTextarea.value;
+            const noteContainer = button.parentNode;
+            const noteTextarea = noteContainer.querySelector('.note-input');
+            const noteHidden = noteContainer.querySelector('.note-hidden');
 
-                // Вместо этой строки можно добавить логику сохранения
-                console.log('Сохранено:', noteText);
+            button.addEventListener('click', () => {
+                const noteText = noteTextarea.value;
+                noteHidden.value = noteText;
             });
+
+            noteTextarea.addEventListener('input', () => {
+                noteHidden.value = noteTextarea.value;
+            });
+
+            // Восстановление заметок после перезагрузки страницы
+            noteTextarea.value = noteHidden.value;
         });
     </script>
 </body>
