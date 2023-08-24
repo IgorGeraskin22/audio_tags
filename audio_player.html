@@ -16,6 +16,21 @@
         #audioContent {
             margin-top: 50px;
         }
+
+        #notesContainer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            background-color: #f7f7f7;
+            padding: 10px;
+            box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #notes {
+            width: 100%;
+            height: 200px;
+        }
     </style>
 </head>
 <body>
@@ -27,9 +42,9 @@
     </div>
 
     <div id="audioContent">
-        
+
+    <p>23.8 Юля\Сериков\оплата</p>
 <p></p>
-<p>23.8 Юля\Сериков\оплата</p>
 <p>СЕРИКОВ <a href="javascript:void(0);" onclick="jumpToTime(0)">0:00:00</a>  Юлия, здравствуйте</p>
 <p>ЮЛЯ  <a href="javascript:void(0);" onclick="jumpToTime(10)">0:00:10</a>  Здравствуйте.  … печатная машинка с деньгами работает.</p>
 <p>СЕРИКОВ <a href="javascript:void(0);" onclick="jumpToTime(18)">0:00:18</a>  К сожалению, не с деньгами.</p>
@@ -249,10 +264,27 @@
 <p>ЮЛЯ  <a href="javascript:void(0);" onclick="jumpToTime(3929)">1:05:29</a>  Все, давайте. Давайте, на связи, коллеги, спасибо за внимание. До свидания.  Всего доброго.</p>
 <p></p>
 <p></p>
+
+
+        
+    </div>
+
+    <div id="notesContainer">
+        <h2>Заметки</h2>
+        <textarea id="notes" placeholder="Введите заметку..."></textarea>
+        <button id="saveButton">Сохранить</button>
     </div>
     
     <script>
         const audioPlayer = document.getElementById('audioPlayer');
+        const notesTextarea = document.getElementById('notes');
+        const saveButton = document.getElementById('saveButton');
+
+        saveButton.addEventListener('click', () => {
+            const notes = notesTextarea.value;
+            localStorage.setItem('userNotes', notes);
+            alert('Заметка сохранена!');
+        });
 
         function jumpToTime(seconds) {
             const hours = Math.floor(seconds / 3600);
@@ -267,6 +299,12 @@
 
         function padZero(num) {
             return num.toString().padStart(2, '0');
+        }
+        
+        // Load saved notes
+        const savedNotes = localStorage.getItem('userNotes');
+        if (savedNotes) {
+            notesTextarea.value = savedNotes;
         }
     </script>
 </body>
