@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Создание Gist заметки</title>
+    <title>Заметки в Gists</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #noteContainer {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Создание Gist заметки</h1>
-
-    <textarea id="noteText" placeholder="Введите заметку"></textarea>
-    <button id="saveButton">Сохранить в Gists</button>
+    <div id="noteContainer">
+        <h1>Заметки в Gists</h1>
+        <textarea id="noteText" placeholder="Введите заметку"></textarea>
+        <button id="saveButton">Сохранить в Gists</button>
+        <p id="resultMessage"></p>
+    </div>
 
     <script>
         document.getElementById('saveButton').addEventListener('click', async () => {
@@ -16,7 +35,7 @@
 
             if (noteText) {
                 const gistData = {
-                    description: 'Заметка с использованием GitHub API',
+                    description: 'Заметка в Gists',
                     public: true,
                     files: {
                         'note.txt': {
@@ -36,16 +55,16 @@
                     });
 
                     if (response.ok) {
-                        alert('Заметка успешно сохранена в Gists!');
+                        document.getElementById('resultMessage').textContent = 'Заметка успешно сохранена в Gists!';
                     } else {
-                        alert('Произошла ошибка при сохранении заметки в Gists.');
+                        document.getElementById('resultMessage').textContent = 'Произошла ошибка при сохранении заметки в Gists.';
                     }
                 } catch (error) {
                     console.error('Ошибка:', error);
-                    alert('Произошла ошибка при выполнении запроса.');
+                    document.getElementById('resultMessage').textContent = 'Произошла ошибка при выполнении запроса.';
                 }
             } else {
-                alert('Введите текст заметки.');
+                document.getElementById('resultMessage').textContent = 'Введите текст заметки.';
             }
         });
     </script>
