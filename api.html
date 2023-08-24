@@ -1,16 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Изменение текста</title>
+    <title>Заметки к тексту</title>
+    <style>
+        .note-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .note-input {
+            width: 300px;
+            height: 25px;
+            margin-left: 10px;
+        }
+
+        .note-button {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
-    <p id="myElement">Это начальный текст</p>
+    <p>Это строка текста 1</p>
+    <div class="note-container">
+        <textarea class="note-input" placeholder="Заметка"></textarea>
+        <button class="note-button">Сохранить</button>
+    </div>
 
-    <button id="changeTextButton">Изменить текст</button>
+    <p>Это строка текста 2</p>
+    <div class="note-container">
+        <textarea class="note-input" placeholder="Заметка"></textarea>
+        <button class="note-button">Сохранить</button>
+    </div>
+
+    <p>Это строка текста 3</p>
+    <div class="note-container">
+        <textarea class="note-input" placeholder="Заметка"></textarea>
+        <button class="note-button">Сохранить</button>
+    </div>
+
+    <!-- Повторите блок note-container для каждой строки текста -->
 
     <script>
-        document.getElementById('changeTextButton').addEventListener('click', () => {
-            document.getElementById('myElement').textContent = 'Это измененный текст';
+        const noteButtons = document.querySelectorAll('.note-button');
+
+        noteButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const noteContainer = button.parentNode;
+                const noteTextarea = noteContainer.querySelector('.note-input');
+                const noteText = noteTextarea.value;
+
+                // Вместо этой строки можно добавить логику сохранения
+                console.log('Сохранено:', noteText);
+            });
         });
     </script>
 </body>
