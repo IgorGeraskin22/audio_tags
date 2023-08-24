@@ -4,21 +4,27 @@
     <title>23.8 Юля\Сериков\оплата</title>
     <style>
         #audioContainer {
-            position: relative;
-            margin-top: 200px; /* Отступ сверху, чтобы контейнер не накладывался на контент */
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+        }
+        
+        #audioContent {
+            margin-top: 40px; /* Отступ, чтобы контент не перекрывался плеером */
         }
     </style>
 </head>
 <body>
-    <h1>23.8 Юля\Сериков\оплата</h1>
-    <audio id="audioPlayer" controls>
-        <source src="https://github.com/IgorGeraskin22/audio_tags/raw/main/32.mp3">
-        Ваш браузер не поддерживает аудиоэлемент.
-    </audio>
-
     <div id="audioContainer">
+        <audio id="audioPlayer" controls>
+            <source src="https://github.com/IgorGeraskin22/audio_tags/raw/main/32.mp3">
+            Ваш браузер не поддерживает аудиоэлемент.
+        </audio>
+    </div>
 
-<p>23.8 Юля\Сериков\оплата</p>
+    <div id="audioContent">
+       <p>23.8 Юля\Сериков\оплата</p>
 <p></p>
 <p>СЕРИКОВ <a href="javascript:void(0);" onclick="jumpToTime(0)">0:00:00</a>  Юлия, здравствуйте</p>
 <p>ЮЛЯ  <a href="javascript:void(0);" onclick="jumpToTime(10)">0:00:10</a>  Здравствуйте.  … печатная машинка с деньгами работает.</p>
@@ -244,7 +250,6 @@
     
     <script>
         const audioPlayer = document.getElementById('audioPlayer');
-        const audioContainer = document.getElementById('audioContainer');
 
         function jumpToTime(seconds) {
             const hours = Math.floor(seconds / 3600);
@@ -260,11 +265,6 @@
         function padZero(num) {
             return num.toString().padStart(2, '0');
         }
-
-        window.addEventListener('scroll', () => {
-            const offset = window.scrollY > 200 ? window.scrollY - 200 : 0; // Коррекция отступа
-            audioContainer.style.marginTop = `${offset}px`;
-        });
     </script>
 </body>
 </html>
