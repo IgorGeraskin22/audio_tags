@@ -11,18 +11,27 @@
     </audio>
     
     <p>Перейти к: 
-        <a href="javascript:void(0);" onclick="jumpToTime(0:00:25)">0:00:25 сек</a> |
-        <a href="javascript:void(0);" onclick="jumpToTime(30)">30 сек</a> |
-        <a href="javascript:void(0);" onclick="jumpToTime(60)">60 сек</a>
+       <a href="javascript:void(0);" onclick="jumpToTime(10)">0:00:10</a>
+       <a href="javascript:void(0);" onclick="jumpToTime(30)">0:00:30</a>
+       <a href="javascript:void(0);" onclick="jumpToTime(60)">0:01:00</a>
     </p>
     
     <script>
-        const audioPlayer = document.getElementById('audioPlayer');
+    function jumpToTime(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const remainingSeconds = seconds % 60;
 
-        function jumpToTime(time) {
-            audioPlayer.currentTime = time;
-            audioPlayer.play();
-        }
+        const formattedTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(remainingSeconds)}`;
+        audioPlayer.currentTime = seconds;
+        audioPlayer.play();
+        console.log(`Jumping to time: ${formattedTime}`);
+}
+
+function padZero(num) {
+    return num.toString().padStart(2, '0');
+}
+
     </script>
 
 <p>Это <span> КАРИНА:  0:00:00  Исмаил, добрый день. Катя Васильевич, прошу тебя. Как дела? Поздравляю Вас со свадьбой дочери. 
