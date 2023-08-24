@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Аудиоплеер с временными метками</title>
+</head>
+<body>
+    <h1>Аудиоплеер с временными метками</h1>
+    <audio id="audioPlayer" controls>
+        <source src="https://drive.google.com/file/d/1fWowmb1h7dQGgIVDMRh89-nOD6r3xaic/view?usp=drive_link" type="audio/mpeg">
+        Ваш браузер не поддерживает аудиоэлемент.
+    </audio>
+    
+    <p>Перейти к: 
+        <a href="javascript:void(0);" onclick="jumpToTime(10)">10 сек</a> |
+        <a href="javascript:void(0);" onclick="jumpToTime(30)">30 сек</a> |
+        <a href="javascript:void(0);" onclick="jumpToTime(60)">60 сек</a>
+    </p>
+    
+    <script>
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        function jumpToTime(time) {
+            audioPlayer.currentTime = time;
+            audioPlayer.play();
+        }
+    </script>
+</body>
+</html>
