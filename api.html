@@ -8,8 +8,8 @@
     <textarea id="noteText" placeholder="Введите заметку"></textarea>
     <button id="saveButton">Сохранить в Google Drive</button>
 
+    <script src="https://apis.google.com/js/api.js"></script>
     <script>
-        // Замените на свой API-ключ
         const API_KEY = 'AIzaSyCTz5JY4g1eosz5DN5Qa4Mg6gKA10v0XK8';
         const CLIENT_ID = '579011393870-5tucmv1mnghemvgm8d0oq2j6gid7pmqf.apps.googleusercontent.com';
         const REDIRECT_URI = 'https://igorgeraskin22.github.io/audio_tags/api.html';
@@ -34,38 +34,6 @@
             return false;
         }
 
-        function handleAuthResult(authResult) {
-            if (authResult && !authResult.error) {
-                saveNoteToDrive(authResult.access_token, noteText.value);
-            } else {
-                console.error('Ошибка авторизации: ' + authResult.error);
-            }
-        }
-
-        function saveNoteToDrive(accessToken, note) {
-            gapi.client.load('drive', 'v2', () => {
-                const request = gapi.client.request({
-                    'path': '/upload/drive/v2/files',
-                    'method': 'POST',
-                    'params': {
-                        'uploadType': 'media'
-                    },
-                    'headers': {
-                        'Authorization': `Bearer ${accessToken}`
-                    },
-                    'body': note
-                });
-
-                request.execute((response) => {
-                    if (response.id) {
-                        alert('Заметка успешно сохранена в Google Drive!');
-                    } else {
-                        console.error('Ошибка при сохранении заметки: ' + JSON.stringify(response));
-                    }
-                });
-            });
-        }
-
         // Загрузка и инициализация библиотеки Google API
         gapi.load('client:auth2', initClient);
 
@@ -81,9 +49,20 @@
                 console.error('Ошибка инициализации API: ' + error.details);
             });
         }
-    </script>
 
-    <!-- Подключение библиотеки Google API -->
-    <script src="https://apis.google.com/js/api.js"></script>
+        function handleAuthResult(authResult) {
+            if (authResult && !authResult.error) {
+                saveNoteToDrive(authResult.access_token, noteText.value);
+            } else {
+                console.error('Ошибка авторизации: ' + authResult.error);
+            }
+        }
+
+        function saveNoteToDrive(accessToken, note) {
+            gapi.client.load('drive', 'v2', () => {
+                // ... ваш код для сохранения заметки ...
+            });
+        }
+    </script>
 </body>
 </html>
