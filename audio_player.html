@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Заметки в GitHub Gists</title>
+    <title>23.8 Юля\Сериков\оплата</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        #audioContent {
+            padding-right: 100px; /* Отступ справа от блоков заметок */
+            padding-left: 20px; /* Отступ слева от контента */
+            padding-top: 20px; /* Отступ сверху от контента */
+            padding-bottom: 20px; /* Отступ снизу от контента */
+        }
+
+        .audio-line {
+            position: relative;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .note-container {
+            margin-left: 20px; /* Отступ между текстом и блоком заметки */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .note-input {
+            width: 100%;
+            height: 25px;
+        }
+
+        .note-button {
+            margin-top: 5px;
+            float: right; /* Выравнивание кнопки справа */
+        }
+    </style>
 </head>
 <body>
-    <h1>Заметки в GitHub Gists</h1>
-    <textarea id="noteText" placeholder="Введите заметку"></textarea>
-    <button id="saveButton">Сохранить в Gists</button>
-
     <div id="audioContent">
         <div id="audioContainer">
             <audio id="audioPlayer" controls>
@@ -21,21 +55,35 @@
         <!-- Первая строка текста -->
         <div class="audio-line">
             <p>СЕРИКОВ <a href="javascript:void(0);" onclick="jumpToTime(0)">0:00:00</a>  Юлия, здравствуйте</p>
+            <div class="note-container">
+                <textarea class="note-input" placeholder="Введите заметку..."></textarea>
+                <button class="note-button" onclick="saveNote()">Сохранить в Gists</button>
+            </div>
         </div>
 
         <!-- Вторая строка текста -->
         <div class="audio-line">
-            <p>ЮЛЯ <a href="javascript:void(0);" onclick="jumpToTime(10)">0:00:10</a>  Здравствуйте.4444444444444444  … печатная машинка с деньгами работает.</p>
+            <p>ЮЛЯ <a href="javascript:void(0);" onclick="jumpToTime(10)">0:00:10</a>  Здравствуйте.777777777777777777  … печатная машинка с деньгами работает.</p>
+            <div class="note-container">
+                <textarea class="note-input" placeholder="Введите заметку..."></textarea>
+                <button class="note-button" onclick="saveNote()">Сохранить в Gists</button>
+            </div>
         </div>
 
         <!-- Третья строка текста -->
         <div class="audio-line">
             <p>СЕРИКОВ <a href="javascript:void(0);" onclick="jumpToTime(18)">0:00:18</a>  К сожалению, не с деньгами.</p>
+            <div class="note-container">
+                <textarea class="note-input" placeholder="Введите заметку..."></textarea>
+                <button class="note-button" onclick="saveNote()">Сохранить в Gists</button>
+            </div>
         </div>
     </div>
 
     <script>
         const audioPlayer = document.getElementById('audioPlayer');
+        const noteButtons = document.querySelectorAll('.note-button');
+        const noteInputs = document.querySelectorAll('.note-input');
 
         function jumpToTime(seconds) {
             const hours = Math.floor(seconds / 3600);
@@ -52,52 +100,45 @@
             return num.toString().padStart(2, '0');
         }
 
-        const audioLines = document.querySelectorAll('.audio-line');
-
-        audioLines.forEach(line => {
-            const noteContainer = document.createElement('div');
-            noteContainer.classList.add('note-container');
-
-            const noteInput = document.createElement('textarea');
-            noteInput.classList.add('note-input');
-            noteInput.placeholder = 'Введите заметку...';
-            noteContainer.appendChild(noteInput);
-
-            const noteButton = document.createElement('button');
-            noteButton.classList.add('note-button');
-            noteButton.textContent = 'Сохранить';
-            noteButton.addEventListener('click', async () => {
-                const noteText = noteInput.value;
-                if (noteText) {
-                    const gistData = {
-                        description: 'Заметка с веб-страницы',
-                        public: true,
-                        files: {
-                            'note.txt': {
-                                content: noteText
-                            }
+        function saveNote() {
+            const noteText = this.previousElementSibling.value;
+            if (noteText) {
+                const gistData = {
+                    description: 'Заметка с веб-страницы',
+                    public: true,
+                    files: {
+                        'note.txt': {
+                            content: noteText
                         }
-                    };
+                    }
+                };
 
-                    const response = await fetch('https://api.github.com/gists', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer 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`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(gistData)
-                    });
+                // Здесь необходимо вставить ваш токен доступа вместо 'YOUR_ACCESS_TOKEN'
+                const token = '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';
 
+                fetch('https://api.github.com/gists', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(gistData)
+                })
+                .then(response => {
                     if (response.ok) {
                         alert('Заметка успешно сохранена в Gists!');
                     } else {
                         alert('Произошла ошибка при сохранении заметки.');
                     }
-                }
-            });
-            noteContainer.appendChild(noteButton);
+                })
+                .catch(error => {
+                    alert('Произошла ошибка при сохранении заметки.');
+                });
+            }
+        }
 
-            line.appendChild(noteContainer);
+        noteButtons.forEach(button => {
+            button.addEventListener('click', saveNote);
         });
     </script>
 </body>
