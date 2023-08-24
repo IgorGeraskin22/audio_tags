@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Заметки к строкам текста</title>
+    <title>Заметки в HTML</title>
 </head>
 <body>
-    <h1>Заметки к строкам текста</h1>
-    
-    <div class="note">
-        <p>Это первая строка текста 1111<span class="note-content"></span></p>
+    <h1>Заметки в HTML</h1>
+
+    <div class="note-container">
+        <p>Это первая строка текста111 <span class="note"></span></p>
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
     </div>
 
-    <div class="note">
-        <p>Это вторая строка текста <span class="note-content"></span></p>
+    <div class="note-container">
+        <p>Это вторая строка текста <span class="note"></span></p>
         <textarea class="note-input" placeholder="Заметка"></textarea>
         <button class="note-button">Сохранить</button>
     </div>
 
-    <!-- Повторите блок note для каждой строки текста -->
+    <!-- Повторите блок note-container для каждой строки текста -->
 
     <script>
         const noteButtons = document.querySelectorAll('.note-button');
@@ -32,13 +32,8 @@
             const noteText = noteTextarea.value;
 
             if (noteText) {
-                const noteContent = document.createElement('span');
-                noteContent.classList.add('note-content');
-                noteContent.textContent = ` [Заметка: ${noteText}]`;
-
-                const noteDiv = button.parentElement;
-                const paragraph = noteDiv.querySelector('p');
-                paragraph.appendChild(noteContent);
+                const noteSpan = button.parentElement.querySelector('.note');
+                noteSpan.textContent = ` [Заметка: ${noteText}]`;
 
                 noteTextarea.value = ''; // Очищаем поле ввода заметки
                 alert('Заметка сохранена!');
