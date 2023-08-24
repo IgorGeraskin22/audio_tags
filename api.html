@@ -4,18 +4,37 @@
     <title>Заметки на странице</title>
 </head>
 <body>
-    <h1>Моя страница с заметками</h1>
-    
-    <!-- Заметка к первой строке текста -->
-    <p>Это первая строка текста. <!-- Здесь может быть ваша заметка --> </p>
+    <h1>Заметки на странице</h1>
 
-    <!-- Заметка ко второй строке текста -->
-    <p>Это вторая строка текста. <!-- Здесь может быть ваша заметка --> </p>
+    <div id="notesContainer">
+        <div class="note">
+            <p>Это первая строка текста 777777777.</p>
+            <textarea class="note-input" placeholder="Введите заметку"></textarea>
+            <button class="note-button">Сохранить</button>
+        </div>
 
-    <!-- Заметка к третьей строке текста -->
-    <p>Это третья строка текста. <!-- Здесь может быть ваша заметка --> </p>
+        <div class="note">
+            <p>Это вторая строка текста.</p>
+            <textarea class="note-input" placeholder="Введите заметку"></textarea>
+            <button class="note-button">Сохранить</button>
+        </div>
 
-    <!-- ... и так далее -->
+        <!-- Повторите блок .note для каждой строки текста -->
+    </div>
 
+    <script>
+        const notes = document.querySelectorAll('.note');
+        notes.forEach(note => {
+            const textarea = note.querySelector('.note-input');
+            const button = note.querySelector('.note-button');
+            const paragraph = note.querySelector('p');
+
+            button.addEventListener('click', () => {
+                const noteText = textarea.value;
+                paragraph.innerHTML += `<br><!-- Заметка: ${noteText} -->`;
+                textarea.value = '';
+            });
+        });
+    </script>
 </body>
 </html>
