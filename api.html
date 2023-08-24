@@ -1,66 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Заметки в Google Drive</title>
+    <title>Заметки на странице</title>
 </head>
 <body>
-    <h1>Заметки в Google Drive</h1>
-    <textarea id="noteText" placeholder="Введите заметку"></textarea>
-    <button id="saveButton">Сохранить в 5555Google Drive</button>
+    <h1>Заметки на странице</h1>
 
-    <script src="https://apis.google.com/js/api.js"></script>
+    <div class="audio-line">
+        <p>Пример текста 1</p>
+        <button class="add-note-button">Добавить заметку</button>
+        <div class="note-container">
+            <textarea class="note-input" placeholder="Введите заметку..."></textarea>
+            <button class="note-save-button">Сохранить</button>
+        </div>
+    </div>
+
+    <div class="audio-line">
+        <p>Пример текста 2</p>
+        <button class="add-note-button">Добавить заметку</button>
+        <div class="note-container">
+            <textarea class="note-input" placeholder="Введите заметку..."></textarea>
+            <button class="note-save-button">Сохранить</button>
+        </div>
+    </div>
+
+    <div class="audio-line">
+        <p>Пример текста 3</p>
+        <button class="add-note-button">Добавить заметку</button>
+        <div class="note-container">
+            <textarea class="note-input" placeholder="Введите заметку..."></textarea>
+            <button class="note-save-button">Сохранить</button>
+        </div>
+    </div>
+
     <script>
-        const API_KEY = 'AIzaSyCTz5JY4g1eosz5DN5Qa4Mg6gKA10v0XK8';
-        const CLIENT_ID = '579011393870-5tucmv1mnghemvgm8d0oq2j6gid7pmqf.apps.googleusercontent.com';
-        const REDIRECT_URI = 'https://igorgeraskin22.github.io';
-        const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+        const addNoteButtons = document.querySelectorAll('.add-note-button');
+        const noteContainers = document.querySelectorAll('.note-container');
+        const noteInputs = document.querySelectorAll('.note-input');
+        const noteSaveButtons = document.querySelectorAll('.note-save-button');
 
-        const authButton = document.getElementById('saveButton');
-        const noteText = document.getElementById('noteText');
-
-        authButton.addEventListener('click', handleAuthClick);
-
-        function handleAuthClick() {
-            gapi.auth2.authorize(
-                {
-                    'client_id': CLIENT_ID,
-                    'scope': SCOPES,
-                    'immediate': false,
-                    'response_type': 'token',
-                    'redirect_uri': REDIRECT_URI
-                },
-                handleAuthResult
-            );
-            return false;
-        }
-
-        // Загрузка и инициализация библиотеки Google API
-        gapi.load('client:auth2', initClient);
-
-        function initClient() {
-            gapi.client.init({
-                apiKey: API_KEY,
-                clientId: CLIENT_ID,
-                scope: SCOPES
-            }).then(() => {
-                // API успешно инициализировано
-                authButton.disabled = false;
-            }).catch((error) => {
-                console.error('Ошибка инициализации API: ' + error.details);
+        for (let i = 0; i < addNoteButtons.length; i++) {
+            addNoteButtons[i].addEventListener('click', () => {
+                noteContainers[i].style.display = 'block';
             });
-        }
 
-        function handleAuthResult(authResult) {
-            if (authResult && !authResult.error) {
-                saveNoteToDrive(authResult.access_token, noteText.value);
-            } else {
-                console.error('Ошибка авторизации: ' + authResult.error);
-            }
-        }
+            noteSaveButtons[i].addEventListener('click', () => {
+                const note = noteInputs[i].value;
+                const noteComment = `<!-- Заметка: ${note} -->`;
 
-        function saveNoteToDrive(accessToken, note) {
-            gapi.client.load('drive', 'v2', () => {
-                // ... ваш код для сохранения заметки ...
+                const textElement = noteContainers[i].previousSibling;
+                textElement.insertAdjacentHTML('afterend', noteComment);
+                noteContainers[i].style.display = 'none';
+                noteInputs[i].value = '';
             });
         }
     </script>
