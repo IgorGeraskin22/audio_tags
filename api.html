@@ -2,13 +2,17 @@
 <html>
 <head>
     <title>Заметки на странице</title>
+    <style>
+        .note-container {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <h1>Заметки на странице</h1>
 
     <div class="audio-line">
-        <p>Пример текста 1</p>
-        <button class="add-note-button">Добавить заметку</button>
+        <p>Пример текста 1111</p>
         <div class="note-container">
             <textarea class="note-input" placeholder="Введите заметку..."></textarea>
             <button class="note-save-button">Сохранить</button>
@@ -17,7 +21,6 @@
 
     <div class="audio-line">
         <p>Пример текста 2</p>
-        <button class="add-note-button">Добавить заметку</button>
         <div class="note-container">
             <textarea class="note-input" placeholder="Введите заметку..."></textarea>
             <button class="note-save-button">Сохранить</button>
@@ -26,7 +29,6 @@
 
     <div class="audio-line">
         <p>Пример текста 3</p>
-        <button class="add-note-button">Добавить заметку</button>
         <div class="note-container">
             <textarea class="note-input" placeholder="Введите заметку..."></textarea>
             <button class="note-save-button">Сохранить</button>
@@ -34,30 +36,22 @@
     </div>
 
     <script>
-        const addNoteButtons = document.querySelectorAll('.add-note-button');
-        const noteContainers = document.querySelectorAll('.note-container');
-        const noteInputs = document.querySelectorAll('.note-input');
         const noteSaveButtons = document.querySelectorAll('.note-save-button');
 
-        for (let i = 0; i < addNoteButtons.length; i++) {
-            addNoteButtons[i].addEventListener('click', () => {
-                noteContainers[i].style.display = 'block';
-            });
+        noteSaveButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                const noteInput = button.parentElement.querySelector('.note-input');
+                const note = noteInput.value;
 
-            noteSaveButtons[i].addEventListener('click', () => {
-                const note = noteInputs[i].value;
-                const textElement = noteContainers[i].previousElementSibling;
-                
-                if (!textElement.hasAttribute('data-note')) {
-                    textElement.setAttribute('data-note', note);
-                } else {
-                    textElement.setAttribute('data-note', `${textElement.getAttribute('data-note')} ${note}`);
+                if (note) {
+                    const textElement = button.parentElement.previousElementSibling;
+                    const existingNote = textElement.getAttribute('data-note');
+                    const updatedNote = existingNote ? `${existingNote} | ${note}` : note;
+                    textElement.setAttribute('data-note', updatedNote);
+                    noteInput.value = '';
                 }
-                
-                noteContainers[i].style.display = 'none';
-                noteInputs[i].value = '';
             });
-        }
+        });
     </script>
 </body>
 </html>
