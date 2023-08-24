@@ -66,9 +66,14 @@
                 <button class="note-button">Сохранить</button>
             </div>
         </div>
-        <!-- Повторите этот блок для каждой строки -->
 
-        <!-- ... другие аудио-строки ... -->
+        <div class="audio-line">
+            <p>ЮЛЯ <a href="javascript:void(0);" onclick="jumpToTime(10)">0:00:10</a>  Здравствуйте.  … печатная машинка с деньгами работает.</p>
+            <div class="note-container">
+                <textarea class="note-input" placeholder="Введите заметку..."></textarea>
+                <button class="note-button">Сохранить</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -109,11 +114,6 @@
                 alert('Заметка сохранена!');
             });
             noteContainer.appendChild(noteButton);
-
-            const savedNote = localStorage.getItem(line.textContent.trim());
-            if (savedNote) {
-                noteInput.value = savedNote;
-            }
 
             document.getElementById('sidebar').appendChild(noteContainer);
         });
