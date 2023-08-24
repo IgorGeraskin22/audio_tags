@@ -8,15 +8,17 @@
 
     <div id="notesContainer">
         <div class="note">
-            <p>Это первая строка текста 777777777.</p>
+            <p>Это первая строка текста.</p>
             <textarea class="note-input" placeholder="Введите заметку"></textarea>
             <button class="note-button">Сохранить</button>
+            <div class="note-text"></div>
         </div>
 
         <div class="note">
             <p>Это вторая строка текста.</p>
             <textarea class="note-input" placeholder="Введите заметку"></textarea>
             <button class="note-button">Сохранить</button>
+            <div class="note-text"></div>
         </div>
 
         <!-- Повторите блок .note для каждой строки текста -->
@@ -27,11 +29,12 @@
         notes.forEach(note => {
             const textarea = note.querySelector('.note-input');
             const button = note.querySelector('.note-button');
-            const paragraph = note.querySelector('p');
+            const noteText = note.querySelector('.note-text');
 
             button.addEventListener('click', () => {
-                const noteText = textarea.value;
-                paragraph.innerHTML += `<br><!-- Заметка: ${noteText} -->`;
+                const newNote = document.createElement('p');
+                newNote.textContent = `Заметка: ${textarea.value}`;
+                noteText.appendChild(newNote);
                 textarea.value = '';
             });
         });
