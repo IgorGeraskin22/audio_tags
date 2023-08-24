@@ -47,10 +47,7 @@
 <body>
     <div id="sidebar">
         <h2>Заметки</h2>
-        <div class="note-container">
-            <textarea class="note-input" placeholder="Введите заметку..."></textarea>
-            <button class="note-button">Сохранить</button>
-        </div>
+        <!-- Пустой контейнер для начала -->
     </div>
 
     <div id="audioContent">
@@ -92,22 +89,33 @@
             return num.toString().padStart(2, '0');
         }
 
-        const noteContainers = document.querySelectorAll('.note-container');
+        const audioLines = document.querySelectorAll('.audio-line');
 
-        noteContainers.forEach(container => {
-            const noteInput = container.querySelector('.note-input');
-            const noteButton = container.querySelector('.note-button');
+        audioLines.forEach(line => {
+            const noteContainer = document.createElement('div');
+            noteContainer.classList.add('note-container');
 
+            const noteInput = document.createElement('textarea');
+            noteInput.classList.add('note-input');
+            noteInput.placeholder = 'Введите заметку...';
+            noteContainer.appendChild(noteInput);
+
+            const noteButton = document.createElement('button');
+            noteButton.classList.add('note-button');
+            noteButton.textContent = 'Сохранить';
             noteButton.addEventListener('click', () => {
                 const note = noteInput.value;
-                localStorage.setItem(container.id, note);
+                localStorage.setItem(line.textContent.trim(), note);
                 alert('Заметка сохранена!');
             });
+            noteContainer.appendChild(noteButton);
 
-            const savedNote = localStorage.getItem(container.id);
+            const savedNote = localStorage.getItem(line.textContent.trim());
             if (savedNote) {
                 noteInput.value = savedNote;
             }
+
+            document.getElementById('sidebar').appendChild(noteContainer);
         });
     </script>
 </body>
