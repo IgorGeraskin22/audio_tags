@@ -1,53 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Заметки в HTML</title>
+    <title>Заметки на странице</title>
 </head>
 <body>
-    <h1>Заметки в HTML</h1>
+    <h1>Моя страница с заметками</h1>
+    
+    <!-- Заметка к первой строке текста -->
+    <p>Это первая строка текста. <!-- Здесь может быть ваша заметка --> </p>
 
-    <div class="note-container">
-        <p>Это первая строка текста123 <!-- Заметка: --></p>
-        <textarea class="note-input" placeholder="Заметка"></textarea>
-        <button class="note-button">Сохранить</button>
-    </div>
+    <!-- Заметка ко второй строке текста -->
+    <p>Это вторая строка текста. <!-- Здесь может быть ваша заметка --> </p>
 
-    <div class="note-container">
-        <p>Это вторая строка текста <!-- Заметка: --></p>
-        <textarea class="note-input" placeholder="Заметка"></textarea>
-        <button class="note-button">Сохранить</button>
-    </div>
+    <!-- Заметка к третьей строке текста -->
+    <p>Это третья строка текста. <!-- Здесь может быть ваша заметка --> </p>
 
-    <!-- Повторите блок note-container для каждой строки текста -->
+    <!-- ... и так далее -->
 
-    <script>
-        const noteButtons = document.querySelectorAll('.note-button');
-        noteButtons.forEach(button => {
-            button.addEventListener('click', saveNote);
-        });
-
-        function saveNote(event) {
-            const button = event.target;
-            const noteTextarea = button.previousElementSibling;
-            const noteText = noteTextarea.value;
-
-            if (noteText) {
-                const noteComment = `<!-- Заметка: ${noteText} -->`;
-
-                const noteContainer = button.parentElement;
-                const paragraph = noteContainer.querySelector('p');
-                const existingNoteComment = paragraph.innerHTML.match(/<!-- Заметка: .*? -->/);
-
-                if (existingNoteComment) {
-                    paragraph.innerHTML = paragraph.innerHTML.replace(existingNoteComment[0], noteComment);
-                } else {
-                    paragraph.innerHTML += ' ' + noteComment;
-                }
-
-                noteTextarea.value = ''; // Очищаем поле ввода заметки
-                alert('Заметка сохранена!');
-            }
-        }
-    </script>
 </body>
 </html>
