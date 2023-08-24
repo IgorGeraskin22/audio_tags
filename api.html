@@ -5,7 +5,6 @@
     <style>
         .note-container {
             display: none;
-            margin-left: 10px;
         }
     </style>
 </head>
@@ -13,7 +12,8 @@
     <h1>Заметки на странице</h1>
 
     <div class="audio-line">
-        <p>Пример текста 123</p>
+        <p>Пример текста 1</p>
+        <button class="note-toggle-button">Добавить заметку</button>
         <div class="note-container">
             <textarea class="note-input" placeholder="Введите заметку..."></textarea>
             <button class="note-save-button">Сохранить</button>
@@ -22,6 +22,7 @@
 
     <div class="audio-line">
         <p>Пример текста 2</p>
+        <button class="note-toggle-button">Добавить заметку</button>
         <div class="note-container">
             <textarea class="note-input" placeholder="Введите заметку..."></textarea>
             <button class="note-save-button">Сохранить</button>
@@ -30,6 +31,7 @@
 
     <div class="audio-line">
         <p>Пример текста 3</p>
+        <button class="note-toggle-button">Добавить заметку</button>
         <div class="note-container">
             <textarea class="note-input" placeholder="Введите заметку..."></textarea>
             <button class="note-save-button">Сохранить</button>
@@ -37,6 +39,15 @@
     </div>
 
     <script>
+        const noteToggleButtons = document.querySelectorAll('.note-toggle-button');
+
+        noteToggleButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                const noteContainer = button.nextElementSibling;
+                noteContainer.style.display = noteContainer.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
         const noteSaveButtons = document.querySelectorAll('.note-save-button');
 
         noteSaveButtons.forEach((button, index) => {
@@ -50,6 +61,7 @@
                     const updatedNote = existingNote ? `${existingNote} | ${note}` : note;
                     textElement.setAttribute('data-note', updatedNote);
                     noteInput.value = '';
+                    button.parentElement.style.display = 'none';
                 }
             });
         });
